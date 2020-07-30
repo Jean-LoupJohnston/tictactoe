@@ -1,5 +1,5 @@
 class game:
-    board = [['','',''],['','',''],['','','']]
+    board = [['','6',''],['4','',''],['','','s']]
 
 #player is identified by a character ('X' or 'O')
 #check if player has won
@@ -40,30 +40,30 @@ class game:
         except:
             return False
 
+    def gameLoop():
+        x =game()
 
-x =game()
-
-print (x.board[0])
-print (x.board[1])
-print (x.board[2])
+        print (x.board[0])
+        print (x.board[1])
+        print (x.board[2])
 
 
 
-player = 'X'
-while(1):
-    inp1, inp2 = input('Enter coordonates:').split()
-    inp1 = int(inp1)
-    inp2 = int(inp2)
-    if(x.move(player,inp1-1,inp2-1)):
-        print ("player "+player+" wins!!!!!!!! ;:^)")
-    if(player=='X'):
-        player = 'O'
-        
-    elif(player=='O'):
         player = 'X'
+        while(1):
+            inp1, inp2 = input('Enter coordonates:').split()
+            inp1 = int(inp1)
+            inp2 = int(inp2)
+            if(x.move(player,inp1-1,inp2-1)):
+                print ("player "+player+" wins!!!!!!!! ;:^)")
+            if(player=='X'):
+                player = 'O'
+                
+            elif(player=='O'):
+                player = 'X'
 
-    print (x.board[0])
-    print (x.board[1])
-    print (x.board[2])
-        
+            print (x.board[0])
+            print (x.board[1])
+            print (x.board[2])
+                
     

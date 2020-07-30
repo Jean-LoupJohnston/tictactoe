@@ -9,17 +9,28 @@
 
 </head>
     <body>
-      <div class="board" id="board">
-        <div class="cell"></div>
-        <div class="cell"></div>
-        <div class="cell"></div>
-        <div class="cell"></div>
-        <div class="cell"></div>
-        <div class="cell"></div>
-        <div class="cell"></div>
-        <div class="cell"></div>
-        <div class="cell"></div>
+      <table>
+          <tr>
+            <td class = "cell" id=0></td>
+            <td class = "cell" id=1></td>
+            <td class = "cell" id=2></td>
+          </tr>
+          <tr>
+            <td class = "cell" id=3></td>
+            <td class = "cell" id=4></td>
+            <td class = "cell" id=5></td>
+          </tr>
+          <tr>
+            <td class = "cell" id=6></td>
+            <td class = "cell" id=7></td>
+            <td class = "cell" id=8></td>
+          </tr>
+        </table>
 
-      </div>
+      <script>
+
+      setInterval(function(){c1 ={{c1}};console.log(c1); document.getElementById(1).innerHTML = c1}, 1000);
+      </script>
+      <script type="text/javascript" src="{{ url_for('static', filename='scripts.js')}}"></script>
     </body>
 </html>
