@@ -1,7 +1,7 @@
 var board;
 
 var currentPlayer ="";
-
+var playerTurn = "X";
 
 const img1 = "<img src='static/a.webp' width = '90px' height = '90px'>";
 const img2 = "<img src='static/c.png' width = '90px' height = '90px'>";
@@ -15,22 +15,23 @@ function start()
 //On connection, set current player
   socket.on('connect', function(msg) {
     currentPlayer = msg
-    console.log(msg)
 	});
 
-
-
-  //accept broadcast from sever and update board
+  //accept broadcast from server and update board
   socket.on('message', function(msg) {
+    console.log(msg)
     if(msg.split(" ")[0]=="X")
     {
-      document.getElementById(msg.split(" ")[1]).innerHTML =  img1;
+      document.getElementById(msg.split(" ")[1]).innerHTML =  img1
+      playerTurn = "O"
     }
     else {
       {
-              document.getElementById(msg.split(" ")[1]).innerHTML =  img2;
+          document.getElementById(msg.split(" ")[1]).innerHTML =  img2
+            playerTurn = "X"
       }
     }
+    //if victory
       if(msg.split(" ")[2]=="t")
       {
         resetBoard(msg.split(" ")[0])
@@ -43,10 +44,12 @@ function start()
   }
 }
 
-//when clicking a cell
+//when clicking a cell, doesn't work if it's not player's turn
 function click(x)
 {
-  socket.send(currentPlayer+" "+x.target.id)
+
+  if(currentPlayer==playerTurn)
+    {socket.send(currentPlayer+" "+x.target.id)}
 }
 
 //after someone wins, reset board
@@ -55,6 +58,7 @@ function resetBoard(player)
   for(var i = 0; i<cells.length; i++)
   {
     cells[i].innerHTML =  ""
+    playerTurn = "X"
     document.getElementById("win").innerText = "Player "+player+" won"
   }
 }

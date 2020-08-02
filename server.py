@@ -26,16 +26,19 @@ def handleConnect():
 
 @socketio.on('message')
 def handleMessage(msg):
-    # message sends which player made and move and to which cell
+    # message sends which player made a move and to which cell
     player = msg.split()[0]
     cell = msg.split()[1]
     win = 'f'
     #if player wins
-    if(game.move(startGame, player, int(cell))):
+    move = game.move(startGame, player, int(cell))
+    if(move=="win"):
         win = 't'
         game.reset()
-    #broadcast player, move, and if they have won
-    send(player+" "+cell+" "+win, broadcast=True)
+    if(not move=="bad"):
+        #broadcast player, move, and if they have won
+        send(player+" "+cell+" "+win, broadcast=True)
+
 
 
 

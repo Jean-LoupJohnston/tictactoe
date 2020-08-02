@@ -33,32 +33,18 @@ class game:
     def reset():
         board = [['','',''],['','',''],['','','']]
 
-#player moves, returns true if they win
+#player moves, returns true if they win, check if cell is already taken
     def move(self,player,cell):
         try:
-            if(cell==0):
-                self.board[0][0] = player
-            elif(cell==1):
-                self.board[0][1] = player
-            elif(cell==2):
-                self.board[0][2] = player
-            elif(cell==3):
-                self.board[1][0] = player
-            elif(cell==4):
-                self.board[1][1] = player
-            elif(cell==5):
-                self.board[1][2] = player
-            elif(cell==6):
-                self.board[2][0] = player
-            elif(cell==7):
-                self.board[2][1] = player
-            elif(cell==8):
-                self.board[2][2] = player
+            if(not self.board[(cell//3)%3][cell%3]==''):
+                return "bad"
+            else:
+                self.board[(cell//3)%3][cell%3] = player
             if(self.win(player)):
-                return True
-            return False
+                return "win"
+            return "good"
         except:
-            return False
+            return "bad"
 
     def gameLoop():
         x =game()
@@ -75,7 +61,7 @@ class game:
             inp1 = int(inp1)
             inp2 = int(inp2)
             if(x.move(player,inp1-1,inp2-1)):
-                print ("player "+player+" wins!!!!!!!! ;:^)")
+                print ("player "+player+" wins!!")
             if(player=='X'):
                 player = 'O'
 
