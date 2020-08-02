@@ -18,7 +18,7 @@ class game:
            return True
         if(self.board[0][1]== player and self.board[1][1]== player and self.board[2][1]== player):
            self.board = [['','',''],['','',''],['','','']]
-           return true
+           return True
         if(self.board[0][2]== player and self.board[1][2]== player and self.board[2][2]== player):
            self.board = [['','',''],['','',''],['','','']]
            return True

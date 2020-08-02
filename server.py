@@ -1,10 +1,28 @@
 from flask import Flask,render_template, url_for
-from flask_socketio import SocketIO, send
+from flask_socketio import SocketIO, send, emit
 from game import game
 
 app = Flask(__name__)
+app.secret_key = 'secret key'
 socketio = SocketIO(app)
-startGame = game();
+startGame = game()
+
+connectedUsers = 0
+
+
+@socketio.on('connect')
+def handleConnect():
+    global connectedUsers
+    connectedUsers += 1
+    if(connectedUsers==1):
+        emit("connect", "X")
+    else:
+        emit("connect", "O" )
+
+@socketio.on('disconnect')
+def handleConnect():
+    global connectedUsers
+    connectedUsers -= 1
 
 @socketio.on('message')
 def handleMessage(msg):
