@@ -3,6 +3,30 @@ body {
   margin: 0;
   background-color: #d9ffcc;
 }
+h1{
+  front-family: "Lucida Console", Monaco, monospace;
+  text-align: center;
+  font-size: 50px;
+}
+form{
+  text-align: center;
+}
+.a{
+  background-color: #d9ffcc;
+}
+
+.b {
+  background-color: #4CAF50;
+  border: none;
+  color: white;
+  padding: 20px;
+  text-align: center;
+  text-decoration: none;
+  display: inline-block;
+  font-size: 16px;
+  margin: 4px 2px;
+  border-radius: 8px;
+}
 
 td{
   border: 2px solid;

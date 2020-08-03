@@ -20,7 +20,7 @@ def handleConnect():
         emit("connect", "O" )
 
 @socketio.on('disconnect')
-def handleConnect():
+def handleDisconnect():
     global connectedUsers
     connectedUsers -= 1
 
@@ -40,11 +40,13 @@ def handleMessage(msg):
         send(player+" "+cell+" "+win, broadcast=True)
 
 
-
-
 @app.route("/")
 def home():
-    return render_template("index.html")
+    return render_template("home.html")
+
+@app.route("/game")
+def play():
+    return render_template("game.html")
 
 
 if __name__ == "__main__":

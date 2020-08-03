@@ -3,8 +3,6 @@ var board;
 var currentPlayer ="";
 var playerTurn = "X";
 
-const img1 = "<img src='static/a.webp' width = '90px' height = '90px'>";
-const img2 = "<img src='static/c.png' width = '90px' height = '90px'>";
 var socket = io.connect('http://127.0.0.1:5000')
 const cells = document.querySelectorAll(".cell");
 
@@ -22,12 +20,12 @@ function start()
     console.log(msg)
     if(msg.split(" ")[0]=="X")
     {
-      document.getElementById(msg.split(" ")[1]).innerHTML =  img1
+      document.getElementById(msg.split(" ")[1]).innerHTML =  "<img id="+msg.split(" ")[1]+" src='static/a.webp' width = '90px' height = '90px'>"
       playerTurn = "O"
     }
     else {
       {
-          document.getElementById(msg.split(" ")[1]).innerHTML =  img2
+          document.getElementById(msg.split(" ")[1]).innerHTML =  "<img id="+msg.split(" ")[1]+" src='static/c.png' width = '90px' height = '90px'>";
             playerTurn = "X"
       }
     }
