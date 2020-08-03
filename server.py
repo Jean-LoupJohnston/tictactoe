@@ -1,14 +1,13 @@
-from flask import Flask,render_template, url_for
+from flask import Flask,render_template, url_for, request, session, redirect
 from flask_socketio import SocketIO, send, emit
 from game import game
 
 app = Flask(__name__)
-app.secret_key = 'secret key'
+app.secret_key = 'secret key123'
 socketio = SocketIO(app)
 startGame = game()
 
 connectedUsers = 0
-
 
 @socketio.on('connect')
 def handleConnect():
@@ -23,6 +22,10 @@ def handleConnect():
 def handleDisconnect():
     global connectedUsers
     connectedUsers -= 1
+
+@socketio.on('victory')
+def victory(msg):
+    emit("victory", msg,  broadcast=True)
 
 @socketio.on('message')
 def handleMessage(msg):
@@ -40,13 +43,17 @@ def handleMessage(msg):
         send(player+" "+cell+" "+win, broadcast=True)
 
 
-@app.route("/")
+@app.route("/", methods = ["POST","GET"])
 def home():
+    if request.method == "POST":
+        session["user"] = request.form["name"]
+        return redirect(url_for("play"))
     return render_template("home.html")
 
 @app.route("/game")
 def play():
-    return render_template("game.html")
+    user = session["user"]
+    return render_template("game.html", user=user)
 
 
 if __name__ == "__main__":

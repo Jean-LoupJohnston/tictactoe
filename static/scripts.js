@@ -1,8 +1,7 @@
 var board;
 
-var currentPlayer ="";
-var playerTurn = "X";
-
+var currentPlayer =""
+var playerTurn = "X"
 var socket = io.connect('http://127.0.0.1:5000')
 const cells = document.querySelectorAll(".cell");
 
@@ -32,6 +31,7 @@ function start()
     //if victory
       if(msg.split(" ")[2]=="t")
       {
+
         resetBoard(msg.split(" ")[0])
       }
   	});
@@ -53,10 +53,18 @@ function click(x)
 //after someone wins, reset board
 function resetBoard(player)
 {
+  //if player won, send his name to server
+  if(player == currentPlayer){
+  socket.emit("victory", user)
+}
+//listen for winner name
+socket.on('victory', function(msg) {
+  document.getElementById("win").innerText = (msg+" wins!!")
+});
+
   for(var i = 0; i<cells.length; i++)
   {
     cells[i].innerHTML =  ""
-    playerTurn = "X"
-    document.getElementById("win").innerText = "Player "+player+" won"
   }
+  playerTurn = "X"
 }
