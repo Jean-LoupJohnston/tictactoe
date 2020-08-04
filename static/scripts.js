@@ -17,19 +17,22 @@ function start()
   //accept broadcast from server and update board
   socket.on('message', function(msg) {
     console.log(msg)
+    id = (Number(msg.split(" ")[2])+1)+msg.split(" ")[1]
+    console.log(id)
+
     if(msg.split(" ")[0]=="X")
     {
-      document.getElementById(msg.split(" ")[1]).innerHTML =  "<img id="+msg.split(" ")[1]+" src='static/a.webp' width = '90px' height = '90px'>"
+      document.getElementById(id).innerHTML =  "<img id="+id+" src='static/a.webp' width = '55px' height = '55px'>"
       playerTurn = "O"
     }
     else {
       {
-          document.getElementById(msg.split(" ")[1]).innerHTML =  "<img id="+msg.split(" ")[1]+" src='static/c.png' width = '90px' height = '90px'>";
+          document.getElementById(id).innerHTML =  "<img id="+id+" src='static/c.png' width = '55px' height = '55px'>";
             playerTurn = "X"
       }
     }
     //if victory
-      if(msg.split(" ")[2]=="t")
+      if(msg.split(" ")[3]=="t")
       {
 
         resetBoard(msg.split(" ")[0])
@@ -47,7 +50,7 @@ function click(x)
 {
 
   if(currentPlayer==playerTurn)
-    {socket.send(currentPlayer+" "+x.target.id)}
+    { socket.send(currentPlayer+" "+x.target.id%10 +" " +(Math.floor(x.target.id/10)-1))}
 }
 
 //after someone wins, reset board

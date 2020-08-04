@@ -40,8 +40,12 @@ class game:
            return True
         return False
 
-    def reset():
-        board = [['','',''],['','',''],['','','']]
+    def reset(self):
+        self.bigBoard =  [['','',''],['','',''],['','','']]
+        print(self.bigBoard)
+        for x in range (9):
+            self.boards[x] = ([['','',''],['','',''],['','','']])
+        print(self.boards)
 
 #player moves, returns true if they win, check if cell is already taken
     def move(self,player,cell, boardNum):
@@ -51,23 +55,22 @@ class game:
         else:
             board = self.boards[boardNum]
 
-        try:
+
 #if cell is already taken
-            if(not board[(cell//3)%3][cell%3]==''):
-                return "bad"
-            else:
-                board[(cell//3)%3][cell%3] = player
-#if board has been won already
-            if(not self.bigboard==''):
-                return "bad"
-# if sub-board is won, place move on bigboard
-            if(self.win(player, boardNum)):
-                self.move(player,boardNum,10)
-                if(self.win(player,10)):
-                    return "win"
-            return "good"
-        except:
+        if(not board[(cell//3)%3][cell%3]==''):
             return "bad"
+        else:
+            board[(cell//3)%3][cell%3] = player
+#if board has been won already
+        if(not self.bigBoard[(boardNum//3)%3][boardNum%3]==''):
+            return "bad"
+# if sub-board is won, place move on bigboard
+        if(self.win(player, boardNum)):
+            self.move(player,boardNum,10)
+            if(self.win(player,10)):
+                return "win"
+        return "good"
+
 
     def gameLoop():
         x =game()
@@ -93,4 +96,3 @@ class game:
                 print(board)
             print("Big")
             print(x.bigBoard)
-#game.gameLoop()

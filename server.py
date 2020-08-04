@@ -32,15 +32,16 @@ def handleMessage(msg):
     # message sends which player made a move and to which cell
     player = msg.split()[0]
     cell = msg.split()[1]
+    boardNum = msg.split()[2]
     win = 'f'
     #if player wins
-    move = game.move(startGame, player, int(cell))
+    move = game.move(startGame, player, int(cell),int(boardNum))
     if(move=="win"):
         win = 't'
-        game.reset()
+        game.reset(startGame)
     if(not move=="bad"):
         #broadcast player, move, and if they have won
-        send(player+" "+cell+" "+win, broadcast=True)
+        send(player+" "+cell+" "+boardNum+" "+win, broadcast=True)
 
 
 @app.route("/", methods = ["POST","GET"])
