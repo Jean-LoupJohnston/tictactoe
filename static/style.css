@@ -30,8 +30,17 @@ form{
 
 td{
   border: 2px solid;
-  height: 100px;
-  width: 100px;
+  height: 200px;
+  width: 200px;
+  text-align: center;
+  vertical-align: middle;
+  cursor:pointer;
+}
+
+.cell{
+  border: 1px solid;
+  height: 60px;
+  width: 60px;
   text-align: center;
   vertical-align: middle;
   cursor:pointer;
@@ -41,9 +50,18 @@ table{
   border-collapse: collapse;
   position: absolute;
   left: 50%;
-  margin-left: -154px;
+  margin-left: -302px;
   top: 50%;
-  margin-top: -154px;
+  margin-top: -302px;
+}
+
+.subtable{
+  border-collapse: collapse;
+  position: relative;
+  left: 50%;
+  margin-left: -91px;
+  top: 50%;
+  margin-top: -190px;
 }
 
 table tr:first-child td{
