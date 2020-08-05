@@ -31,11 +31,17 @@ function start()
             playerTurn = "X"
       }
     }
-    //if victory
+//if victory
       if(msg.split(" ")[3]=="t")
       {
 
-        resetBoard(msg.split(" ")[0])
+        resetBoard(msg.split(" ")[0], false)
+      }
+//if draw
+      else if(msg.split(" ")[3]=="d")
+      {
+
+        resetBoard(msg.split(" ")[0], true)
       }
   	});
 
@@ -54,10 +60,14 @@ function click(x)
 }
 
 //after someone wins, reset board
-function resetBoard(player)
+function resetBoard(player, draw)
 {
+  if(draw)
+  {
+    document.getElementById("win").innerText = ("Draw!")
+  }
   //if player won, send his name to server
-  if(player == currentPlayer){
+  else if(player == currentPlayer){
   socket.emit("victory", user)
 }
 //listen for winner name

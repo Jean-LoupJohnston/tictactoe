@@ -40,12 +40,24 @@ class game:
            return True
         return False
 
+#check if game has resulted in a draw
+    def draw(self, player, boardNum):
+        board = ""
+        if(boardNum==10):
+            board = self.bigBoard
+        else:
+            board = self.boards[boardNum]
+        for x in range(9):
+            if (board[(x//3)%3][x%3] == ""):
+                return False
+        return True
+
+
     def reset(self):
         self.bigBoard =  [['','',''],['','',''],['','','']]
-        print(self.bigBoard)
         for x in range (9):
             self.boards[x] = ([['','',''],['','',''],['','','']])
-        print(self.boards)
+
 
 #player moves, returns true if they win, check if cell is already taken
     def move(self,player,cell, boardNum):
@@ -69,6 +81,8 @@ class game:
             self.move(player,boardNum,10)
             if(self.win(player,10)):
                 return "win"
+            elif(self.draw(player,10)):
+                return "draw"
         return "good"
 
 

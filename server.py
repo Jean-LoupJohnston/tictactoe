@@ -34,10 +34,14 @@ def handleMessage(msg):
     cell = msg.split()[1]
     boardNum = msg.split()[2]
     win = 'f'
-    #if player wins
+    #if player wins or draw
     move = game.move(startGame, player, int(cell),int(boardNum))
+    print("move:   "+move)
     if(move=="win"):
         win = 't'
+        game.reset(startGame)
+    elif(move=="draw"):
+        win = 'd'
         game.reset(startGame)
     if(not move=="bad"):
         #broadcast player, move, and if they have won
