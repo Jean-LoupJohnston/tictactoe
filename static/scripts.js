@@ -52,7 +52,6 @@ function start()
 //if bigboard draw
       else if(msg.split(" ")[3]=="d")
       {
-
         resetBoard(msg.split(" ")[0], true)
       }
   	});
@@ -76,6 +75,7 @@ function resetBoard(player, draw)
 {
   if(draw)
   {
+    document.getElementById("win").style.visibility = "visible"
     document.getElementById("win").innerText = ("Draw!")
   }
   //if player won, send his name to server
@@ -85,7 +85,7 @@ function resetBoard(player, draw)
 //listen for winner name
 socket.on('victory', function(msg) {
   document.getElementById("win").style.visibility = "visible"
-  document.getElementById("win").innerText = (msg+" wins!!")
+  document.getElementById("win").innerText = (msg+" wins!")
 });
 
   for(var j = 0; j<9;j++)

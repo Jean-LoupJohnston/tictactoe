@@ -88,9 +88,11 @@ class game:
                 status = "win 10"
             elif(self.draw(player,10)):
                 status = "draw 10"
-# if sub-board has a Draw, place a "D" in bigboard
+# if sub-board has a Draw, place a "D" in bigboard, check if it's a draw
         if(self.draw(player, boardNum)):
             self.move("D",boardNum,10)
+            if(self.draw(player,10)):
+                status = "draw 10"
         return status
 
 #for testing

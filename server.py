@@ -1,5 +1,5 @@
 from flask import Flask,render_template, url_for, request, session, redirect
-from flask_socketio import SocketIO, send, emit
+from flask_socketio import SocketIO, send, emit, join_room, leave_room
 from game import game
 
 app = Flask(__name__)
@@ -12,7 +12,6 @@ connectedUsers = 0
 @socketio.on('connect')
 def handleConnect():
     global connectedUsers
-    connectedUsers += 1
     if(connectedUsers==1):
         emit("connect", "X")
     else:
@@ -36,7 +35,8 @@ def handleMessage(msg):
     win = 'f'
     #if player wins or draw
     move = game.move(startGame, player, int(cell),int(boardNum))
-    print(startGame.bigBoard)
+    #print(startGame.bigBoard)
+    #print("move: " + move)
 
     if(move=="win 10"):
         win = 't 10'
@@ -54,14 +54,20 @@ def handleMessage(msg):
 @app.route("/", methods = ["POST","GET"])
 def home():
     if request.method == "POST":
+        global connectedUsers
+        connectedUsers += 1
         session["user"] = request.form["name"]
         return redirect(url_for("play"))
     return render_template("home.html")
 
 @app.route("/game")
 def play():
-    user = session["user"]
-    return render_template("game.html", user=user)
+    try:
+        user = session["user"]
+        return render_template("game.html", user=user)
+    except:
+        return redirect(url_for("home"))
+
 
 
 if __name__ == "__main__":
