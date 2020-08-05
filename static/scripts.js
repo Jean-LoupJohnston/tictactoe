@@ -31,13 +31,25 @@ function start()
             playerTurn = "X"
       }
     }
-//if victory
-      if(msg.split(" ")[3]=="t")
+//if bigboard victory
+      if(msg.split(" ")[3]=="t" && msg.split(" ")[4]=="10")
       {
-
         resetBoard(msg.split(" ")[0], false)
       }
-//if draw
+      else if(msg.split(" ")[3]=="t" )
+      {
+
+        if(msg.split(" ")[0]=="X")
+        {document.getElementById(msg.split(" ")[4]+"a").innerHTML =  "<img  src='static/a.webp' width = '190px' height = '190px'>"
+         document.getElementById(msg.split(" ")[4]+"b").style.visibility= "hidden"
+        }
+        else
+        {document.getElementById(msg.split(" ")[4]+"a").innerHTML =  "<img  src='static/c.png' width = '190px' height = '190px'>"
+         document.getElementById(msg.split(" ")[4]+"b").style.visibility = "hidden"
+        }
+      }
+
+//if bigboard draw
       else if(msg.split(" ")[3]=="d")
       {
 
@@ -56,7 +68,7 @@ function click(x)
 {
 
   if(currentPlayer==playerTurn)
-    { socket.send(currentPlayer+" "+x.target.id%10 +" " +(Math.floor(x.target.id/10)-1))}
+    {socket.send(currentPlayer+" "+x.target.id%10 +" " +(Math.floor(x.target.id/10)-1))}
 }
 
 //after someone wins, reset board
@@ -72,9 +84,18 @@ function resetBoard(player, draw)
 }
 //listen for winner name
 socket.on('victory', function(msg) {
+  document.getElementById("win").style.visibility = "visible"
   document.getElementById("win").innerText = (msg+" wins!!")
 });
 
+  for(var j = 0; j<9;j++)
+  {
+    document.getElementById(j+"a").innerHTML = ""
+  }
+  for(var j = 0; j<9;j++)
+  {
+    document.getElementById(j+"b").style.visibility = "visible"
+  }
   for(var i = 0; i<cells.length; i++)
   {
     cells[i].innerHTML =  ""

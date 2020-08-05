@@ -78,3 +78,26 @@ table tr td:first-child {
 table tr td:last-child {
   border-right: 0;
 }
+
+.win{
+  visibility: hidden;
+  display: flex;
+  position:absolute;
+  text-align: center;
+  font-size: 25px;
+  text-shadow: 0 0 3px #FF0000, 0 0 5px #0000FF;
+  height: 150px;
+  width: 300px;
+  background-color: white;
+  margin-left: -150px;
+  margin-top: -75px;
+  border-radius: 5px;
+  z-index: 2;
+  left: 50%;
+  top: 50%;
+  box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+
+}

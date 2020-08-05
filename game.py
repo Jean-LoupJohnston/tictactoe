@@ -62,6 +62,7 @@ class game:
 #player moves, returns true if they win, check if cell is already taken
     def move(self,player,cell, boardNum):
         board = ""
+        status = "good"
         if(boardNum==10):
             board = self.bigBoard
         else:
@@ -70,22 +71,29 @@ class game:
 
 #if cell is already taken
         if(not board[(cell//3)%3][cell%3]==''):
-            return "bad"
+            status = "bad 10"
+            return status
         else:
             board[(cell//3)%3][cell%3] = player
 #if board has been won already
         if(not self.bigBoard[(boardNum//3)%3][boardNum%3]==''):
-            return "bad"
+            status = "bad 10"
+            return status
+
 # if sub-board is won, place move on bigboard
         if(self.win(player, boardNum)):
+            status = ("win "+ str(boardNum))
             self.move(player,boardNum,10)
             if(self.win(player,10)):
-                return "win"
+                status = "win 10"
             elif(self.draw(player,10)):
-                return "draw"
-        return "good"
+                status = "draw 10"
+# if sub-board has a Draw, place a "D" in bigboard
+        if(self.draw(player, boardNum)):
+            self.move("D",boardNum,10)
+        return status
 
-
+#for testing
     def gameLoop():
         x =game()
 
