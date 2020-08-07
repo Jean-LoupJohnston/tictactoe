@@ -11,7 +11,12 @@ function start()
 {
 //On connection, set current player
   socket.on('connect', function(msg) {
-    currentPlayer = msg
+    if(msg){
+      currentPlayer = msg.split(" ")[0]
+        document.getElementById("waiting").innerHTML = "Playing against:"
+        document.getElementById("waiting2").innerHTML = msg.split(" ")[1]
+    }
+
 	});
 
   //accept broadcast from server and update board
@@ -55,6 +60,12 @@ function start()
       }
   	});
 
+    socket.on('disconnect', function(msg) {
+      resetBoard("Opponent left, "+msg+" wins!", false)
+  	});
+
+
+
   for(var i = 0; i<cells.length; i++)
   {
     cells[i].addEventListener('click',click,false);
@@ -81,12 +92,20 @@ function resetBoard(player, draw)
   else if(player == currentPlayer){
   socket.emit("victory", user)
 }
+//if opponent left
+else{
+  document.getElementById("win").style.visibility = "visible"
+  document.getElementById("win").innerText = (player)
+  document.getElementById("waiting").innerHTML = "Waiting for opponent..."
+  document.getElementById("waiting2").innerHTML = ""
+}
 //listen for winner name
 socket.on('victory', function(msg) {
   document.getElementById("win").style.visibility = "visible"
   document.getElementById("win").innerText = (msg+" wins!")
 });
 
+//reset boards
   for(var j = 0; j<9;j++)
   {
     document.getElementById(j+"a").innerHTML = ""

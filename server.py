@@ -1,5 +1,5 @@
 from flask import Flask,render_template, url_for, request, session, redirect
-from flask_socketio import SocketIO, send, emit, join_room, leave_room
+from flask_socketio import SocketIO, send, emit, join_room, close_room
 from game import game
 
 app = Flask(__name__)
@@ -12,19 +12,50 @@ userPairs = {}
 def handleConnect():
 #assign either "X" or "O" to user based on placement in dict
 #every user joins a room on their own
+
     join_room(session["user"])
+    opponent = ""
     for x, y in userPairs.items():
         if x == session["user"]:
-            emit("connect", "X")
+            opponent = y
             break
         if y == session["user"]:
-            emit("connect", "O" )
+            opponent = x
             break
 
+    for x, y in userPairs.items():
+        if y == session["user"]:
+            emit("connect", "X "+ session["user"], room = opponent)
+            emit("connect", "O "+ opponent, room = session["user"])
+            break
+    print(userPairs)
 
+#if user disconnects, close their room, take them out of userPairs
+#delete their gameboard
+#tell other player their opponent left
 @socketio.on('disconnect')
 def handleDisconnect():
-    leave_room(request.form["name"])
+    close_room(session["user"])
+    del gameBoards[session["user"]]
+    for x, y in userPairs.items():
+        if x == session["user"]:
+            emit("disconnect", y, room = y)
+            gameBoards[y] = game()
+            if(userPairs[x]):
+                userPairs[y] = False;
+                del userPairs[x]
+                break
+                y= False;
+            else:
+                del userPairs[x]
+                break
+        if y == session["user"]:
+            emit("disconnect", x, x)
+            gameBoards[x] = game()
+            userPairs[x] = False
+            break
+    print(userPairs)
+
 
 @socketio.on('victory')
 def victory(msg):
@@ -74,22 +105,23 @@ def handleMessage(msg):
 
 @app.route("/", methods = ["POST","GET"])
 def home():
+    session.clear()
 #place username in session
     if request.method == "POST" :
         if (request.form["name"] not in userPairs) and (request.form["name"] not in userPairs.values()):
-            session["user"] = request.form["name"]
+            session["user"] = request.form["name"].replace(" ", "-")
 #check if someone else is looking for an opponent, otherwise create a game
             openGame = False;
             for x, y in userPairs.items():
                 if not y:
-                    userPairs[x]= request.form["name"]
-                    gameBoards[request.form["name"]] = gameBoards[x]
-                    print(gameBoards)
+                    userPairs[x]= session["user"]
+                    gameBoards[session["user"]] = gameBoards[x]
                     openGame = True;
+                    break
             if not openGame:
-                userPairs[request.form["name"]] = False;
-                gameBoards[request.form["name"]] = game()
-                print(gameBoards)
+                userPairs[session["user"]] = False;
+                gameBoards[session["user"]] = game()
+
             return redirect(url_for("play"))
 #if name is taken, stay on this page and try again
         else:
@@ -98,8 +130,15 @@ def home():
 
 @app.route("/game")
 def play():
+# if the username hasnt been set, return home
+
+    if not session.get("user"):
+        return redirect(url_for("home"))
+    if session.get("inGame"):
+        return redirect(url_for("home"))
     try:
         user = session["user"]
+        session["inGame"] = True
         return render_template("game.html", user=user)
     except:
         return redirect(url_for("home"))
