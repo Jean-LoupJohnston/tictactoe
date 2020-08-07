@@ -18,7 +18,6 @@ function start()
   socket.on('message', function(msg) {
     console.log(msg)
     id = (Number(msg.split(" ")[2])+1)+msg.split(" ")[1]
-    console.log(id)
 
     if(msg.split(" ")[0]=="X")
     {

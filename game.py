@@ -1,11 +1,11 @@
 class game:
 
-    boards = []
-    bigBoard =  [['','',''],['','',''],['','','']]
-    for x in range (9):
-        boards.append( [['','',''],['','',''],['','','']])
 
-
+    def __init__(self):
+        self.boards = []
+        self.bigBoard =  [['','',''],['','',''],['','','']]
+        for x in range (9):
+            self.boards.append( [['','',''],['','',''],['','','']])
 #player is identified by a character ('X' or 'O')
 #check if player has won
     def win(self, player, boardNum):
