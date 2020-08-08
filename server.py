@@ -147,7 +147,7 @@ def play():
 
 
 if __name__ == "__main__":
-    run.app()
+    app.run()
 
 def getOpponent():
     for x, y in userPairs.items():
