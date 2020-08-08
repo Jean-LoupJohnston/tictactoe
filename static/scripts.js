@@ -2,7 +2,7 @@ var board;
 
 var currentPlayer =""
 var playerTurn = "X"
-var socket = io.connect('http://127.0.0.1:5000')
+var socket = io.connect('http://ultimatetictactoes.com')
 const cells = document.querySelectorAll(".cell");
 
 //start game
