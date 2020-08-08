@@ -2,7 +2,7 @@ var board;
 
 var currentPlayer =""
 var playerTurn = "X"
-var socket = io.connect("http://ultimate-tictactoes.herokuapp.com")
+var socket = io.connect('http://'+document.domain +":" +location.port)
 const cells = document.querySelectorAll(".cell");
 
 //start game
