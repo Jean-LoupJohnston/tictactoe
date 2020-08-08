@@ -4,15 +4,17 @@
     <meta charset="utf-8">
     <title>Tic-Tac-Toe</title>
     <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='style.css')}}">
+    <link rel="icon" href="{{ url_for('static', filename='toe2.png')}}">
   </head>
   <body>
-    <h1>Welcome to Tic-Tac-Toes</h1>
-
-    <form method="POST">
-    <input class="a" placeholder="Enter your name" name= "name"></input>
     <br><br>
-     <input class = "b" type="Submit" value="Enter"></input>
-    </form>
+    <h1><img  src='static/title.png' width="50%"></h1>
+    <br><br><br><br><br>
+      <form method="POST">
+      <input class="a" placeholder="Enter your name" name= "name"></input>
+      <br><br>
+       <input class = "b" type="Submit" value="Enter"></input>
+      </form>
     <div style="text-align: center; color:red;">{{taken}}</div>
   </body>
 </html>

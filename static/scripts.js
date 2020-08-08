@@ -26,12 +26,12 @@ function start()
 
     if(msg.split(" ")[0]=="X")
     {
-      document.getElementById(id).innerHTML =  "<img id="+id+" src='static/a.webp' width = '55px' height = '55px'>"
+      document.getElementById(id).innerHTML =  "<img id="+id+" src='static/toe2.png' width = '55px' height = '55px'>"
       playerTurn = "O"
     }
     else {
       {
-          document.getElementById(id).innerHTML =  "<img id="+id+" src='static/c.png' width = '55px' height = '55px'>";
+          document.getElementById(id).innerHTML =  "<img id="+id+" src='static/toe1.png' width = '55px' height = '55px'>";
             playerTurn = "X"
       }
     }
@@ -44,11 +44,11 @@ function start()
       {
 
         if(msg.split(" ")[0]=="X")
-        {document.getElementById(msg.split(" ")[4]+"a").innerHTML =  "<img  src='static/a.webp' width = '190px' height = '190px'>"
+        {document.getElementById(msg.split(" ")[4]+"a").innerHTML =  "<img  src='static/toe2.png' width = '190px' height = '190px'>"
          document.getElementById(msg.split(" ")[4]+"b").style.visibility= "hidden"
         }
         else
-        {document.getElementById(msg.split(" ")[4]+"a").innerHTML =  "<img  src='static/c.png' width = '190px' height = '190px'>"
+        {document.getElementById(msg.split(" ")[4]+"a").innerHTML =  "<img  src='static/toe1.png' width = '190px' height = '190px'>"
          document.getElementById(msg.split(" ")[4]+"b").style.visibility = "hidden"
         }
       }
@@ -59,9 +59,9 @@ function start()
         resetBoard(msg.split(" ")[0], true)
       }
   	});
-
+//if opponent leaves
     socket.on('disconnect', function(msg) {
-      resetBoard("Opponent left, "+msg+" wins!", false)
+      resetBoard(-1, false)
   	});
 
 
@@ -93,11 +93,12 @@ function resetBoard(player, draw)
   socket.emit("victory", user)
 }
 //if opponent left
-else{
+else if( player==-1) {
   document.getElementById("win").style.visibility = "visible"
-  document.getElementById("win").innerText = (player)
+  document.getElementById("win").innerText = "Opponent left, you win!"
   document.getElementById("waiting").innerHTML = "Waiting for opponent..."
   document.getElementById("waiting2").innerHTML = ""
+  currentPlayer = ""
 }
 //listen for winner name
 socket.on('victory', function(msg) {
