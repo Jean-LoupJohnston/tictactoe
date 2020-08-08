@@ -2,7 +2,7 @@ var board;
 
 var currentPlayer =""
 var playerTurn = "X"
-var socket = io.connect('http://'+document.domain +":" +location.port)
+var socket = io()
 const cells = document.querySelectorAll(".cell");
 
 //start game
