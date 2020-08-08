@@ -4,8 +4,10 @@ from flask import Flask,render_template, url_for, request, session, redirect
 from flask_socketio import SocketIO, send, emit, join_room, close_room
 from game import game
 
+
 app = Flask(__name__)
 app.secret_key = os.environ.get('SECRET')
+SocketIO(app,cors_allowed_origins="*")
 socketio = SocketIO(app)
 gameBoards = {}
 userPairs = {}
