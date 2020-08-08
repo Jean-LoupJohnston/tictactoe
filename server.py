@@ -147,7 +147,7 @@ def play():
 
 
 if __name__ == "__main__":
-    socketio.run(app,debug=True)
+    run.app()
 
 def getOpponent():
     for x, y in userPairs.items():
