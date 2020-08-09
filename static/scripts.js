@@ -61,7 +61,9 @@ function start()
   	});
 //if opponent leaves
     socket.on('disconnect', function(msg) {
+      socket.emit("disconnect", user)
       resetBoard(-1, false)
+
   	});
 
 

@@ -39,8 +39,11 @@ def handleConnect():
 #tell other player their opponent left
 @socketio.on('disconnect')
 def handleDisconnect():
-    close_room(session["user"])
-    del gameBoards[session["user"]]
+    try:
+        close_room(msg)
+        del gameBoards[msg]
+    except:
+        print("disconnect error")
     for x, y in userPairs.items():
         if x == session["user"]:
             emit("disconnect", y, room = y)
