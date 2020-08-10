@@ -126,14 +126,16 @@ def home():
             for x, y in userPairs.items():
                 if not y:
                     openGames.append(x)
-                    gameBoards[session["user"]] = gameBoards[x]
 
-            userPairs[x]= session["user"]
-            gameBoards[session["user"]] = gameBoards[x]
 #if there are no games, create one
             if not openGames:
                 userPairs[session["user"]] = False;
                 gameBoards[session["user"]] = game()
+
+            else:
+                opp = random.choice(openGames)
+                userPairs[opp]= session["user"]
+                gameBoards[session["user"]] = gameBoards[opp]
 
             return redirect(url_for("play"))
 #if name is taken, stay on this page and try again
