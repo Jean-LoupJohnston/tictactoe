@@ -1,4 +1,5 @@
 import os
+import random
 
 from flask import Flask,render_template, url_for, request, session, redirect
 from flask_socketio import SocketIO, send, emit, join_room, close_room
@@ -119,15 +120,18 @@ def home():
     if request.method == "POST" :
         if (request.form["name"] not in userPairs) and (request.form["name"] not in userPairs.values()):
             session["user"] = request.form["name"].replace(" ", "-")
-#check if someone else is looking for an opponent, otherwise create a game
-            openGame = False;
+
+# get list of users looking for a game, connect to random one
+            openGames = []
             for x, y in userPairs.items():
                 if not y:
-                    userPairs[x]= session["user"]
+                    openGames.append(x)
                     gameBoards[session["user"]] = gameBoards[x]
-                    openGame = True;
-                    break
-            if not openGame:
+
+            userPairs[x]= session["user"]
+            gameBoards[session["user"]] = gameBoards[x]
+#if there are no games, create one
+            if not openGames:
                 userPairs[session["user"]] = False;
                 gameBoards[session["user"]] = game()
 
