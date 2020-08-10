@@ -47,7 +47,8 @@ def handleDisconnect():
     for x, y in userPairs.items():
         if x == session["user"]:
             emit("disconnect", y, room = y)
-            gameBoards[y] = game()
+            if(y):
+                gameBoards[y] = game()
             if(userPairs[x]):
                 userPairs[y] = False;
                 del userPairs[x]
