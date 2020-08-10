@@ -57,7 +57,7 @@ def handleDisconnect():
                 del userPairs[x]
                 break
         if y == session["user"]:
-            emit("disconnect", x, x)
+            emit("disconnect", x, room = x)
             gameBoards[x] = game()
             userPairs[x] = False
             break
@@ -138,7 +138,9 @@ def home():
 
 @app.route("/game")
 def play():
+
 # if the username hasnt been set, return home
+#if player quits a game, return home
 
     if not session.get("user"):
         return redirect(url_for("home"))
