@@ -42,8 +42,8 @@ def handleDisconnect():
     try:
         close_room(session["user"])
         del gameBoards[session["user"]]
-    except:
-        print("disconnect error")
+    except Exception as e:
+        print("Disconect error"+e)
     for x, y in userPairs.items():
         if x == session["user"]:
             emit("disconnect", y, room = y)
